@@ -1,0 +1,12 @@
+{
+  "name": "@dargmuesli/nuxt-cookie-control",
+  "version": "9.0.4",
+  "configKey": "cookieControl",
+  "compatibility": {
+    "nuxt": ">=3.0.0"
+  },
+  "builder": {
+    "@nuxt/module-builder": "1.0.1",
+    "unbuild": "unknown"
+  }
+}
