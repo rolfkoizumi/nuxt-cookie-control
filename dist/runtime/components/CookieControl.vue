@@ -100,11 +100,11 @@
                             :id="resolveTranslatable(cookie.name, locale)"
                             type="checkbox"
                             :checked="
-  isConsentGiven === void 0 ? cookie.isPreselected : getCookieIds(localCookiesEnabled).includes(
+  getCookieIds(localCookiesEnabled).includes(
     cookie.id
   )
 "
-                            @change="toogleCookie(cookie)"
+                            @change="toggleCookie(cookie)"
                           />
                           <button type="button" @click="toggleButton($event)">
                             {{ getName(cookie.name) }}
@@ -224,7 +224,12 @@ const {
 } = useCookieControl();
 const nuxtApp = useNuxtApp();
 const expires = new Date(Date.now() + moduleOptions.cookieExpiryOffsetMs);
-const localCookiesEnabled = ref([...cookiesEnabled.value || []]);
+const preselectedCookies = moduleOptions.cookies[CookieType.OPTIONAL].filter(
+  (cookie) => cookie.isPreselected
+);
+const localCookiesEnabled = ref([
+  ...cookiesEnabled.value || (isConsentGiven.value === void 0 ? preselectedCookies : [])
+]);
 const allCookieIdsString = getAllCookieIdsString(moduleOptions);
 const cookieIsConsentGiven = useCookie(moduleOptions.cookieNameIsConsentGiven, {
   expires,
@@ -298,7 +303,7 @@ const toggleButton = ($event) => {
   ;
   $event.target?.nextSibling?.click();
 };
-const toogleCookie = (cookie) => {
+const toggleCookie = (cookie) => {
   const cookieIndex = getCookieIds(localCookiesEnabled.value).indexOf(cookie.id);
   if (cookieIndex < 0) {
     localCookiesEnabled.value.push(cookie);
