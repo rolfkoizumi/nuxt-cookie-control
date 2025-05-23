@@ -88,8 +88,7 @@
     "lint:fix": "pnpm run lint:js --fix .",
     "lint:js": "eslint --cache",
     "lint:ts": "vue-tsc --noEmit",
-    "prepack": "echo skipping build",
-    "prepare": "husky && nuxt-module-build prepare"
+    "prepare": "pnpm build"
   },
   "type": "module",
   "typesVersions": {
